@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1324" />
+      <stop offset="100%" stop-color="#040812" />
+    </linearGradient>
+    <linearGradient id="cyanBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38ef7d" stop-opacity="0" />
+      <stop offset="0%" stop-color="#42e0e0" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+    <linearGradient id="blueGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <!-- Background Container -->
+  <rect width="128" height="128" rx="28" fill="url(#bgGrad)" stroke="rgba(66, 224, 224, 0.25)" stroke-width="2" />
+  
+  <!-- Stylized E and Arrow/X Mark -->
+  <g transform="translate(24, 24)">
+    <!-- Back Spine of E -->
+    <path d="M 6 8 L 44 8 C 47.3 8 50 10.7 50 14 L 50 20 C 50 21.5 49.2 22.8 48 23.5 L 24 23.5 L 24 34 L 42 34 C 45 34 47 36 47 39 L 47 43 C 47 46 45 48 42 48 L 24 48 L 24 57 L 52 57 C 55 57 58 59 58 62 L 58 66 C 58 69.3 55.3 72 52 72 L 6 72 C 2.7 72 0 69.3 0 66 L 0 14 C 0 10.7 2.7 8 6 8 Z" fill="url(#cyanBlueGrad)" />
+    
+    <!-- Forward Chevron / Arrow / X wing -->
+    <path d="M 32 40 L 60 14 C 62 12 66 12 68 14 L 76 22 C 78 24 78 28 76 30 L 58 48 L 78 68 C 80 70 80 74 78 76 L 70 84 C 68 86 64 86 62 84 L 32 54 C 28 50 28 44 32 40 Z" fill="url(#blueGlow)" opacity="0.95" />
+    
+    <!-- Inner Accent Line -->
+    <path d="M 44 36 L 56 48 L 44 60" fill="none" stroke="#67e8f9" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+</svg>

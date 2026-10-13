@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-main: #070b14;
+    --panel-bg: rgba(15, 23, 42, 0.88);
+    --panel-border: rgba(151, 178, 220, 0.18);
+    --accent-blue: #46a4ff;
+    --accent-cyan: #43e0e0;
+    --ps-blue: #00439c;
+  }
+
+  body {
+    background-color: var(--bg-main);
+    background-image: 
+      radial-gradient(ellipse at 50% 0%, #17345c 0%, #0b1426 42%, #060911 100%);
+    min-height: 100vh;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+
+  /* Focus ring optimized for PS5 browser and TV distance */
+  :focus-visible {
+    outline: 3px solid #43e0e0 !important;
+    outline-offset: 3px !important;
+    box-shadow: 0 0 25px rgba(67, 224, 224, 0.75), 0 0 10px rgba(70, 164, 255, 0.5) !important;
+  }
+}
+
+/* Subtle background overlay grid lines */
+.bg-ambient-lines::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.15;
+  background: 
+    linear-gradient(120deg, transparent 0 48%, rgba(67, 224, 224, 0.11) 48.2%, transparent 48.5%),
+    linear-gradient(30deg, transparent 0 69%, rgba(70, 164, 255, 0.10) 69.2%, transparent 69.5%);
+  z-index: 0;
+  animation: drift 32s linear infinite;
+}
+
+@keyframes drift {
+  from { transform: translateX(-1%) rotate(0deg); }
+  to { transform: translateX(1%) rotate(1.5deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.85; filter: drop-shadow(0 0 12px rgba(67, 224, 224, 0.4)); }
+  50% { opacity: 1; filter: drop-shadow(0 0 24px rgba(70, 164, 255, 0.8)); }
+}
+
+.glow-logo {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+/* Custom scrollbar for consoles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(10, 16, 28, 0.7);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(70, 164, 255, 0.4);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(67, 224, 224, 0.7);
+}
