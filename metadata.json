@@ -1,6 +1,0 @@
-{
-  "name": "evoX Start Page Browser",
-  "description": "Start page and browser dashboard optimized for PlayStation 5 with multilingual translations, controller navigation, customizable shortcuts, header, and footer badges.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
