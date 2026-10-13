@@ -1,23 +1,169 @@
-<!doctype html>
-<html lang="fr" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="color-scheme" content="dark" />
-    <title>evoX Start Page Browser</title>
-    <meta name="description" content="evoX Start Page Browser - Page de démarrage optimisée pour le navigateur de la PlayStation 5 avec navigation manette DualSense, raccourcis et multilingue." />
-    <meta property="og:title" content="evoX Start Page Browser" />
-    <meta property="og:description" content="Page de démarrage optimisée pour le navigateur PS5 avec navigation manette DualSense, raccourcis et multilingue." />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/png" href="/assets/playstation-light.png" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-  </head>
-  <body class="bg-[#070b14] text-[#f3f7ff] antialiased min-h-screen select-none overflow-x-hidden font-sans">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>evoX Start</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+:root{
+  --bg:#070b14; --panel:rgba(15,23,42,.88); --panel2:rgba(22,32,53,.86);
+  --line:rgba(151,178,220,.18); --text:#f3f7ff; --muted:#9aabc5;
+  --blue:#46a4ff; --cyan:#43e0e0; --focus:#fff; --danger:#ff6b83;
+}
+*{box-sizing:border-box}
+html{min-height:100%;background:var(--bg)}
+body{margin:0;min-height:100vh;color:var(--text);font-family:Arial,Helvetica,sans-serif;
+ background:radial-gradient(ellipse at 50% 0%,#17345c 0%,#0b1426 42%,#060911 100%);
+ overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.17;
+ background:linear-gradient(120deg,transparent 0 48%,rgba(67,224,224,.11) 48.2%,transparent 48.5%),
+ linear-gradient(30deg,transparent 0 69%,rgba(70,164,255,.10) 69.2%,transparent 69.5%)}
+.wrap{position:relative;width:min(1120px,94vw);margin:0 auto;padding:34px 0 28px}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:42px}
+.brand{display:flex;align-items:center;gap:12px;font-size:14px;font-weight:bold;letter-spacing:3px;text-transform:uppercase;color:#dceaff}
+.brandmark{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;
+ background:linear-gradient(135deg,#42d9e5,#3986ff);color:#06101d;font-size:20px;font-weight:900;
+ box-shadow:0 0 28px rgba(55,165,255,.28)}
+.clock{font-size:13px;color:var(--muted);letter-spacing:1px}
+.hero{text-align:center;margin:0 auto 32px}
+.avatar-wrap{position:relative;display:inline-block;margin-bottom:17px}
+.avatar{width:88px;height:88px;border-radius:50%;border:3px solid rgba(92,203,255,.85);
+ box-shadow:0 0 0 7px rgba(70,164,255,.09),0 0 32px rgba(70,164,255,.25);object-fit:cover;background:#15233a}
+.online{position:absolute;right:3px;bottom:5px;width:17px;height:17px;border-radius:50%;
+ background:#41e0ae;border:3px solid #0a1323}
+h1{font-size:clamp(28px,4vw,43px);margin:0 0 9px;letter-spacing:.4px}
+h1 span{color:var(--cyan)}
+.subtitle{margin:0;color:var(--muted);font-size:15px}
+.searchbox{max-width:790px;margin:0 auto 20px;padding:9px;display:flex;gap:10px;align-items:center;
+ background:rgba(14,24,42,.92);border:1px solid rgba(112,168,229,.3);border-radius:19px;
+ box-shadow:0 16px 50px rgba(0,0,0,.26),0 0 35px rgba(37,127,229,.08)}
+.search-icon{font-size:22px;padding:0 8px 0 11px;color:var(--cyan)}
+#address{flex:1;min-width:0;background:transparent;border:0;outline:none;color:#fff;font-size:17px;padding:15px 4px}
+#address::placeholder{color:#8294b0}
+.go{border:0;border-radius:12px;padding:14px 22px;background:linear-gradient(135deg,#46dce0,#4295ff);
+ color:#06101d;font-weight:bold;font-size:14px;cursor:pointer}
+.go:focus,.go:hover{filter:brightness(1.13)}
+.hint{font-size:12px;color:#8294b0;margin-top:10px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:32px 0 15px}
+.section-head h2{margin:0;font-size:14px;letter-spacing:2px;text-transform:uppercase;color:#d8e7ff}
+.section-head h2:before{content:"";display:inline-block;width:4px;height:15px;border-radius:5px;background:var(--cyan);margin-right:10px;vertical-align:-3px}
+.smallbtn{background:rgba(22,35,57,.8);border:1px solid var(--line);color:#d8e7ff;border-radius:10px;padding:10px 13px;font-size:12px;font-weight:bold;cursor:pointer}
+.smallbtn:hover{border-color:var(--blue);background:#172b48}
+.shortcuts{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
+.shortcut{position:relative;min-height:125px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(145deg,rgba(25,39,64,.88),rgba(11,18,32,.94));
+ color:var(--text);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-decoration:none;padding:16px 8px;cursor:pointer;transition:transform .12s,border-color .12s,background .12s}
+.shortcut:hover{transform:translateY(-2px);border-color:rgba(67,224,224,.6);background:linear-gradient(145deg,#203958,#111d31)}
+.shortcut:focus,.smallbtn:focus,.go:focus,#address:focus,.modal input:focus,.modal button:focus{outline:3px solid var(--focus);outline-offset:3px}
+.tileicon{width:51px;height:51px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(145deg,#243e60,#13233a);border:1px solid rgba(126,180,236,.22);font-size:25px;font-weight:bold;overflow:hidden}
+.tileicon img{width:100%;height:100%;object-fit:cover}
+.tilelabel{font-size:13px;font-weight:bold;text-align:center;max-width:100%;overflow-wrap:anywhere}
+.tilehost{font-size:10px;color:var(--muted);margin-top:-8px}
+.remove{position:absolute;top:7px;right:7px;width:24px;height:24px;border-radius:8px;border:1px solid rgba(255,255,255,.14);background:#17253a;color:#ff9aaa;display:none;cursor:pointer;font-size:16px}
+.editing .remove{display:block}
+.empty{grid-column:1/-1;padding:28px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:16px}
+.footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:19px;margin-top:38px;color:#70839f;font-size:11px}
+.footer a{color:#8fc9ff;text-decoration:none}
+.modal-backdrop{display:none;position:fixed;z-index:10;inset:0;background:rgba(1,5,12,.78);align-items:center;justify-content:center;padding:18px}
+.modal-backdrop.open{display:flex}
+.modal{width:min(460px,100%);background:#101b2d;border:1px solid rgba(91,171,255,.45);border-radius:19px;padding:24px;box-shadow:0 25px 80px #000}
+.modal h2{margin:0 0 18px;font-size:21px}
+.modal label{display:block;color:#a9bad3;font-size:12px;margin:14px 0 7px}
+.modal input,.modal select{width:100%;padding:12px;border-radius:10px;border:1px solid #30445f;background:#08111f;color:#fff;font-size:15px}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}
+.note{font-size:11px;color:#8093af;line-height:1.5;margin-top:13px}
+@media(max-width:850px){.shortcuts{grid-template-columns:repeat(4,minmax(0,1fr))}.wrap{padding-top:24px}.topline{margin-bottom:32px}}
+@media(max-width:520px){.shortcuts{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.shortcut{min-height:108px}.tileicon{width:44px;height:44px}.clock{display:none}.topline{margin-bottom:28px}.searchbox{border-radius:14px}.go{padding:13px 15px}#address{font-size:15px}}
+</style>
+<style>
+body:before{animation:drift 28s linear infinite}body:after{animation:glow 8s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translateX(-2%) rotate(0)}to{transform:translateX(2%) rotate(2deg)}}@keyframes glow{from{opacity:.4;transform:scale(.98)}to{opacity:1;transform:scale(1.04)}}@keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.hero{animation:rise .8s ease both}h1{animation:glow 4s ease-in-out infinite}.searchbox,.section-head{animation:rise .8s .12s ease both}.shortcut{animation:rise .45s ease both}
+.welcome{color:#fff}.xblue{color:#3295ff}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="topline">
+    <div class="brand"><div class="brandmark">e</div><span>evoX start</span></div>
+    <div class="clock" id="clock">PS5 • QUICK ACCESS</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="avatar-wrap">
+        <img class="avatar" src="https://github.com/nexgen999.png" alt="Avatar GitHub de nexgen999"
+             onerror="this.src='https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png'">
+        <span class="online"></span>
+      </div>
+      <h1><span class="welcome" data-i18n="welcome">Bienvenue sur</span> <span style="color:#fff">evo</span><span style="color:#3295ff">X</span></h1>
+      <p class="subtitle" data-i18n="subtitle">Tout votre web, au même endroit.</p>
+    </section>
+
+    <form class="searchbox" id="searchForm">
+      <span class="search-icon">⌕</span>
+      <input id="address" type="text" autocomplete="off" autocapitalize="off" spellcheck="false"
+             data-i18n-placeholder="searchPlaceholder" placeholder="Entrer une URL ou rechercher sur le Web…" aria-label="URL ou recherche">
+      <button class="go" type="submit" data-i18n="go">GO ↗</button>
+    </form>
+    <div class="hint" style="text-align:center" data-i18n="searchHint">Saisissez une URL ou un terme de recherche, puis appuyez sur Entrée.</div>
+
+    <div class="section-head">
+      <h2 data-i18n="shortcuts">Mes raccourcis</h2>
+      <div style="display:flex;gap:8px">
+        <button class="smallbtn" id="editBtn" type="button" data-i18n="manage">GÉRER</button>
+        <button class="smallbtn" id="addBtn" type="button" data-i18n="add">＋ AJOUTER</button>
+      </div>
+    </div>
+    <section class="shortcuts" id="shortcuts" aria-label="Raccourcis favoris"></section>
+  </main>
+
+  <footer class="footer">
+    <span>evoX Start Page <span style="color:#46a4ff">◆</span> <span data-i18n="footer">Conçue pour une navigation simple à la manette.</span></span>
+    <a href="https://github.com/nexgen999" target="_blank" rel="noopener">GitHub · nexgen999</a>
+  </footer>
+</div>
+
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <h2 id="modalTitle">Ajouter un raccourci</h2>
+    <form id="shortcutForm">
+      <label for="shortcutName" data-i18n="nameLabel">Nom affiché</label>
+      <input id="shortcutName" maxlength="30" required placeholder="Ex. evoX Store">
+      <label for="shortcutUrl" data-i18n="urlLabel">Adresse URL</label>
+      <input id="shortcutUrl" type="text" required placeholder="https://exemple.com" autocapitalize="off">
+      <label for="shortcutIcon">Icône (emoji ou URL d'image)</label>
+      <input id="shortcutIcon" placeholder="fa-brands fa-github / evox.svg / 🎮">
+      <label for="iconType" data-i18n="iconTypeLabel">Type d’icône</label><select id="iconType"><option value="fontawesome">Font Awesome</option><option value="image">Image dans assets/ ou URL</option><option value="emoji">Emoji / texte</option></select>
+      <div class="note" id="modalNote">Modifiez json/config.json pour les raccourcis de départ. Les images locales doivent être placées dans assets/.</div>
+      <div class="modal-actions">
+        <button class="smallbtn" type="button" id="cancelBtn" data-i18n="cancel">ANNULER</button>
+        <button class="go" type="submit" data-i18n="save">ENREGISTRER</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+const fallback={language:"fr",searchEngine:"https://www.google.com/search?q={query}",profile:{name:"nexgen999",avatar:"https://github.com/nexgen999.png",github:"https://github.com/nexgen999"},appearance:{showClock:true,animation:true},shortcuts:[{name:"GitHub",url:"https://github.com",icon:"fa-brands fa-github",type:"fontawesome"},{name:"evoX CoreOS",url:"https://github.com/nexgen999/evoX-CoreOS",icon:"evox.svg",type:"image"},{name:"YouTube",url:"https://www.youtube.com",icon:"fa-brands fa-youtube",type:"fontawesome"},{name:"Google",url:"https://www.google.com",icon:"fa-brands fa-google",type:"fontawesome"},{name:"Bing",url:"https://www.bing.com",icon:"fa-solid fa-magnifying-glass",type:"fontawesome"},{name:"Reddit",url:"https://www.reddit.com",icon:"fa-brands fa-reddit-alien",type:"fontawesome"},{name:"PlayStation",url:"https://www.playstation.com",icon:"fa-brands fa-playstation",type:"fontawesome"},{name:"evoX Store",url:"https://github.com/nexgen999/EvoX-Universal.Store",icon:"fa-solid fa-store",type:"fontawesome"}]};
+const words={fr:{welcome:"Bienvenue sur",subtitle:"Tout votre web, au même endroit.",searchPlaceholder:"Entrer une URL ou rechercher sur le Web…",go:"GO ↗",searchHint:"Saisissez une URL ou un terme de recherche, puis appuyez sur Entrée.",shortcuts:"Mes raccourcis",manage:"GÉRER",done:"TERMINER",add:"＋ AJOUTER",footer:"Conçue pour une navigation simple à la manette.",nameLabel:"Nom affiché",urlLabel:"Adresse URL",iconLabel:"Icône : Font Awesome, emoji ou image",iconTypeLabel:"Type d’icône",modalNote:"Modifiez json/config.json pour les raccourcis de départ. Les images locales doivent être placées dans assets/.",cancel:"ANNULER",save:"ENREGISTRER",addTitle:"Ajouter un raccourci",editTitle:"Modifier le raccourci",empty:"Aucun raccourci. Utilisez ＋ AJOUTER pour commencer.",badUrl:"Veuillez saisir une URL valide.",deleteConfirm:"Supprimer ce raccourci ?",searchLabel:"URL ou recherche"},en:{welcome:"Welcome to",subtitle:"Your whole web, in one place.",searchPlaceholder:"Enter a URL or search the web…",go:"GO ↗",searchHint:"Enter a URL or search term, then press Enter.",shortcuts:"My shortcuts",manage:"MANAGE",done:"DONE",add:"＋ ADD",footer:"Designed for easy controller navigation.",nameLabel:"Display name",urlLabel:"URL address",iconLabel:"Icon: Font Awesome, emoji or image",iconTypeLabel:"Icon type",modalNote:"Edit json/config.json for the default shortcuts. Local images belong in assets/.",cancel:"CANCEL",save:"SAVE",addTitle:"Add shortcut",editTitle:"Edit shortcut",empty:"No shortcuts yet. Use ＋ ADD to get started.",badUrl:"Please enter a valid URL.",deleteConfirm:"Delete this shortcut?",searchLabel:"URL or search"},es:{welcome:"Bienvenido a",subtitle:"Toda tu web, en un solo lugar.",searchPlaceholder:"Introduce una URL o busca en la web…",go:"IR ↗",searchHint:"Introduce una URL o término y pulsa Intro.",shortcuts:"Mis accesos",manage:"GESTIONAR",done:"LISTO",add:"＋ AÑADIR",footer:"Diseñada para navegar fácilmente con mando.",nameLabel:"Nombre",urlLabel:"Dirección URL",iconLabel:"Icono: Font Awesome, emoji o imagen",iconTypeLabel:"Tipo de icono",modalNote:"Edita json/config.json para los accesos predeterminados. Las imágenes locales van en assets/.",cancel:"CANCELAR",save:"GUARDAR",addTitle:"Añadir acceso",editTitle:"Editar acceso",empty:"No hay accesos. Pulsa ＋ AÑADIR para empezar.",badUrl:"Introduce una URL válida.",deleteConfirm:"¿Eliminar este acceso?",searchLabel:"URL o búsqueda"}};
+const $=id=>document.getElementById(id);let config=fallback,items=[],editing=false,editIndex=-1,lang="fr";const key="evox-ps5-start-shortcuts-v2";
+function t(k){return (words[lang]&&words[lang][k])||words.fr[k]||k}
+function applyLang(){document.documentElement.lang=lang;document.querySelectorAll("[data-i18n]").forEach(el=>el.textContent=t(el.dataset.i18n));document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>el.placeholder=t(el.dataset.i18nPlaceholder));$("editBtn").textContent=t(editing?"done":"manage");$("address").setAttribute("aria-label",t("searchLabel"));$("modalNote").textContent=t("modalNote")}
+function validUrl(s){s=(s||"").trim();if(!s)return null;if(/^[a-z][a-z0-9+.-]*:/i.test(s)){try{let u=new URL(s);return ["http:","https:"].includes(u.protocol)?u.href:null}catch(e){return null}}if(s.includes(" ")||!s.includes("."))return null;try{return new URL("https://"+s).href}catch(e){return null}}
+function search(value){let q=(value||"").trim();if(!q)return;let url=validUrl(q);if(url){window.location.assign(url);return}window.location.assign((config.searchEngine||fallback.searchEngine).replace("{query}",encodeURIComponent(q)))}
+function host(u){try{return new URL(u).hostname.replace(/^www\./,"")}catch(e){return u}}
+function iconFor(item){let box=document.createElement("div");box.className="tileicon";let type=item.type||"emoji",icon=item.icon||"";if(type==="image"){let img=document.createElement("img");img.alt="";img.src=/^(https?:|data:|\/)/i.test(icon)?icon:"assets/"+icon.replace(/^assets\//,"");img.onerror=()=>{box.textContent=(item.name||"?").charAt(0).toUpperCase()};box.appendChild(img)}else if(type==="fontawesome"){let i=document.createElement("i");i.className=icon||"fa-solid fa-globe";i.setAttribute("aria-hidden","true");box.appendChild(i)}else box.textContent=icon||((item.name||"?").charAt(0).toUpperCase());return box}
+function persist(){try{localStorage.setItem(key,JSON.stringify(items))}catch(e){}}
+function render(){let grid=$("shortcuts");grid.innerHTML="";grid.className=editing?"shortcuts editing":"shortcuts";if(!items.length){let e=document.createElement("div");e.className="empty";e.textContent=t("empty");grid.appendChild(e);return}items.forEach((item,index)=>{let a=document.createElement("a");a.className="shortcut";a.href=item.url;a.style.animationDelay=Math.min(index,12)*45+"ms";a.setAttribute("aria-label",item.name+" — "+item.url);a.appendChild(iconFor(item));let label=document.createElement("div");label.className="tilelabel";label.textContent=item.name;a.appendChild(label);let h=document.createElement("div");h.className="tilehost";h.textContent=host(item.url);a.appendChild(h);a.addEventListener("click",e=>{if(editing){e.preventDefault();openModal(index)}});let rm=document.createElement("button");rm.type="button";rm.className="remove";rm.textContent="×";rm.setAttribute("aria-label","Delete "+item.name);rm.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();if(confirm(t("deleteConfirm"))){items.splice(index,1);persist();render()}});a.appendChild(rm);grid.appendChild(a)})}
+function openModal(i){editIndex=i;$("modalTitle").textContent=t(i<0?"addTitle":"editTitle");let item=i<0?{name:"",url:"",icon:"",type:"fontawesome"}:items[i];$("shortcutName").value=item.name||"";$("shortcutUrl").value=item.url||"";$("shortcutIcon").value=item.icon||"";$("iconType").value=item.type||"emoji";$("backdrop").classList.add("open");setTimeout(()=>$("shortcutName").focus(),20)}function closeModal(){$("backdrop").classList.remove("open")}
+$("searchForm").addEventListener("submit",e=>{e.preventDefault();search($("address").value)});$("addBtn").addEventListener("click",()=>openModal(-1));$("editBtn").addEventListener("click",()=>{editing=!editing;applyLang();render()});$("cancelBtn").addEventListener("click",closeModal);$("backdrop").addEventListener("click",e=>{if(e.target===$("backdrop"))closeModal()});document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+$("shortcutForm").addEventListener("submit",e=>{e.preventDefault();let name=$("shortcutName").value.trim(),url=validUrl($("shortcutUrl").value),icon=$("shortcutIcon").value.trim(),type=$("iconType").value;if(!name||!url){alert(t("badUrl"));return}let item={name,url,icon,type};if(editIndex<0)items.push(item);else items[editIndex]=item;persist();render();closeModal()});
+async function init(){try{let r=await fetch("json/config.json",{cache:"no-store"});if(r.ok){let c=await r.json();config={...fallback,...c,profile:{...fallback.profile,...(c.profile||{})},appearance:{...fallback.appearance,...(c.appearance||{})}}}}catch(e){}lang=words[config.language]?config.language:"fr";$("profileAvatar").src=config.profile.avatar||fallback.profile.avatar;$("profileLink").href=config.profile.github||fallback.profile.github;items=Array.isArray(config.shortcuts)?config.shortcuts.slice():fallback.shortcuts.slice();try{let saved=localStorage.getItem(key);if(saved){let p=JSON.parse(saved);if(Array.isArray(p))items=p}}catch(e){}if(config.appearance.animation===false)document.body.classList.add("no-animation");if(config.appearance.showClock===false)$("clock").style.display="none";applyLang();render();function clock(){if(config.appearance.showClock===false)return;let d=new Date();$("clock").textContent=d.toLocaleDateString(lang==="en"?"en-GB":lang==="es"?"es-ES":"fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase()+" · "+d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}clock();setInterval(clock,30000)}init();
+})();
+</script>
+</body>
 </html>

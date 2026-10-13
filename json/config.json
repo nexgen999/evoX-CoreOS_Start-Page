@@ -1,0 +1,63 @@
+{
+  "language": "fr",
+  "searchEngine": "https://www.google.com/search?q={query}",
+  "profile": {
+    "name": "nexgen999",
+    "avatar": "https://github.com/nexgen999.png",
+    "github": "https://github.com/nexgen999"
+  },
+  "appearance": {
+    "showClock": true,
+    "animation": true
+  },
+  "shortcuts": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com",
+      "icon": "fa-brands fa-github",
+      "type": "fontawesome"
+    },
+    {
+      "name": "evoX CoreOS",
+      "url": "https://github.com/nexgen999/evoX-CoreOS",
+      "icon": "evox.svg",
+      "type": "image"
+    },
+    {
+      "name": "YouTube",
+      "url": "https://www.youtube.com",
+      "icon": "fa-brands fa-youtube",
+      "type": "fontawesome"
+    },
+    {
+      "name": "Google",
+      "url": "https://www.google.com",
+      "icon": "fa-brands fa-google",
+      "type": "fontawesome"
+    },
+    {
+      "name": "Bing",
+      "url": "https://www.bing.com",
+      "icon": "fa-solid fa-magnifying-glass",
+      "type": "fontawesome"
+    },
+    {
+      "name": "Reddit",
+      "url": "https://www.reddit.com",
+      "icon": "fa-brands fa-reddit-alien",
+      "type": "fontawesome"
+    },
+    {
+      "name": "PlayStation",
+      "url": "https://www.playstation.com",
+      "icon": "fa-brands fa-playstation",
+      "type": "fontawesome"
+    },
+    {
+      "name": "evoX Store",
+      "url": "https://github.com/nexgen999/EvoX-Universal.Store",
+      "icon": "fa-solid fa-store",
+      "type": "fontawesome"
+    }
+  ]
+}
