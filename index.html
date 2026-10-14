@@ -39,6 +39,10 @@
     0%, 100% { box-shadow: 0 0 22px rgba(0, 212, 255, 0.4); }
     50% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.7); }
   }
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
 
   header {
     display: flex;
@@ -128,7 +132,7 @@
   }
 
   .search-container {
-    max-width: 760px;
+    max-width: 780px;
     margin: 32px auto 8px;
     padding: 0 20px;
     animation: fadeInUp 0.75s ease-out 0.5s both;
@@ -140,13 +144,19 @@
     background: rgba(255,255,255,0.05);
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 6px 6px 6px 16px;
-    gap: 6px;
+    padding: 6px 6px 6px 14px;
+    gap: 8px;
     transition: border-color 0.3s, box-shadow 0.3s;
   }
   .search-box:focus-within {
     border-color: rgba(0, 212, 255, 0.55);
     box-shadow: 0 0 0 4px rgba(0, 180, 255, 0.12);
+  }
+
+  .search-icon {
+    width: 20px;
+    height: 20px;
+    opacity: 0.7;
   }
 
   .search-box input {
@@ -411,67 +421,74 @@
   .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0,0,0,0.72);
     display: none;
     align-items: center;
     justify-content: center;
     z-index: 100;
     padding: 20px;
+    backdrop-filter: blur(4px);
   }
   .modal-overlay.show { display: flex; }
 
   .modal {
-    background: #121e33;
+    background: #0f1c32;
     border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 28px;
+    border-radius: 20px;
+    padding: 32px;
     width: 100%;
-    max-width: 520px;
-    max-height: 90vh;
+    max-width: 680px;
+    max-height: 92vh;
     overflow-y: auto;
+    animation: modalIn 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.5);
   }
 
   .modal h3 {
-    margin-bottom: 20px;
-    font-size: 20px;
+    margin-bottom: 22px;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
   .modal input {
     width: 100%;
     background: rgba(255,255,255,0.06);
     border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 14px;
+    border-radius: 12px;
+    padding: 13px 16px;
     color: var(--text);
-    font-size: 14px;
-    margin-bottom: 14px;
+    font-size: 15px;
+    margin-bottom: 16px;
     outline: none;
+    transition: border-color 0.25s;
   }
   .modal input:focus { border-color: var(--accent); }
 
   .icon-picker-label {
     font-size: 14px;
     color: var(--muted);
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     display: block;
   }
 
   .icon-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
-    gap: 10px;
-    margin-bottom: 20px;
-    max-height: 280px;
+    grid-template-columns: repeat(auto-fill, minmax(56px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+    max-height: 340px;
     overflow-y: auto;
-    padding-right: 6px;
+    padding-right: 8px;
   }
 
   .icon-option {
-    width: 52px;
-    height: 52px;
+    width: 56px;
+    height: 56px;
     background: rgba(255,255,255,0.05);
     border: 2px solid transparent;
-    border-radius: 12px;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -479,25 +496,24 @@
     transition: all 0.2s ease;
   }
   .icon-option img {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     object-fit: contain;
   }
   .icon-option:hover {
     background: rgba(0, 180, 255, 0.15);
-    transform: scale(1.08);
+    transform: scale(1.1);
   }
   .icon-option.selected {
     border-color: var(--accent);
-    background: rgba(0, 180, 255, 0.22);
-    box-shadow: 0 0 12px rgba(0, 212, 255, 0.3);
+    background: rgba(0, 180, 255, 0.25);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.35);
   }
 
   .modal-actions {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     justify-content: flex-end;
-    margin-top: 8px;
   }
 
   @media (max-width: 700px) {
@@ -505,6 +521,7 @@
     header { padding: 14px 16px; }
     .hero h2 { font-size: 26px; }
     .avatar { width: 100px; height: 100px; }
+    .modal { padding: 22px; }
   }
 </style>
 </head>
@@ -534,7 +551,7 @@
 
 <div class="search-container">
   <div class="search-box">
-    <span style="color:var(--muted);font-size:18px">🔍</span>
+    <img class="search-icon" src="https://img.icons8.com/color/48/search.png" alt="Search">
     <input type="text" id="searchInput" data-i18n-placeholder="searchPlaceholder" placeholder="Entrer une URL ou rechercher..." autofocus>
     
     <button class="engine active" data-engine="google">
@@ -574,46 +591,28 @@
   </div>
 
   <div class="shortcuts" id="shortcutsGrid">
-    <!-- 1 -->
     <a class="shortcut" href="https://nexgen999.github.io/ps5webkit/" target="_blank">
-      <div class="shortcut-icon">
-        <img src="https://img.icons8.com/color/48/gears.png" alt="">
-      </div>
+      <div class="shortcut-icon"><img src="https://img.icons8.com/color/48/gears.png" alt=""></div>
       <div class="shortcut-name">evoX W2JB</div>
     </a>
-    <!-- 2 -->
     <a class="shortcut" href="https://nexgen999.github.io/ps5webkit/" target="_blank">
-      <div class="shortcut-icon">
-        <img src="https://img.icons8.com/color/48/test-tube.png" alt="">
-      </div>
+      <div class="shortcut-icon"><img src="https://img.icons8.com/color/48/test-tube.png" alt=""></div>
       <div class="shortcut-name">evox W2JB Experimental</div>
     </a>
-    <!-- 3 -->
     <a class="shortcut" href="https://nexgen999.github.io/evoX-CoreOS-WebUI/" target="_blank">
-      <div class="shortcut-icon">
-        <img src="https://img.icons8.com/color/48/home.png" alt="">
-      </div>
+      <div class="shortcut-icon"><img src="https://img.icons8.com/color/48/home.png" alt=""></div>
       <div class="shortcut-name">evoX CoreOS WebUI</div>
     </a>
-    <!-- 4 -->
     <a class="shortcut" href="https://nexgen999.github.io/evoX-CoreOS-WebUI/pegasus-store_en.html" target="_blank">
-      <div class="shortcut-icon">
-        <img src="https://img.icons8.com/color/48/shop.png" alt="">
-      </div>
+      <div class="shortcut-icon"><img src="https://img.icons8.com/color/48/shop.png" alt=""></div>
       <div class="shortcut-name">evoX-CoreOS - Pegasus Store V1</div>
     </a>
-    <!-- 5 -->
     <a class="shortcut" href="https://nexgen999.github.io/evoX-CoreOS_Pegasus-Store/" target="_blank">
-      <div class="shortcut-icon">
-        <img src="https://img.icons8.com/color/48/warehouse.png" alt="">
-      </div>
+      <div class="shortcut-icon"><img src="https://img.icons8.com/color/48/warehouse.png" alt=""></div>
       <div class="shortcut-name">evoX-CoreOS - Pegasus Store V2</div>
     </a>
-    <!-- 6 -->
     <a class="shortcut" href="https://nexgen999.github.io/PS5-Repository-List/" target="_blank">
-      <div class="shortcut-icon">
-        <img src="https://img.icons8.com/color/48/database.png" alt="">
-      </div>
+      <div class="shortcut-icon"><img src="https://img.icons8.com/color/48/database.png" alt=""></div>
       <div class="shortcut-name">PS5-Repository-List</div>
     </a>
   </div>
@@ -623,16 +622,13 @@
   <div class="badges-title" data-i18n="badges">• BADGES DU FOOTER</div>
   <div class="badge-list">
     <a class="badge ps" href="https://www.playstation.com/" target="_blank">
-      <span class="left">PlayStation</span>
-      <span class="right">PS5 Browser</span>
+      <span class="left">PlayStation</span><span class="right">PS5 Browser</span>
     </a>
     <a class="badge gh" href="https://github.com/nexgen999" target="_blank">
-      <span class="left">GitHub</span>
-      <span class="right">nexgen999</span>
+      <span class="left">GitHub</span><span class="right">nexgen999</span>
     </a>
     <a class="badge evox" href="https://nexgen999.github.io/evoX-CoreOS-WebUI/" target="_blank">
-      <span class="left">evoX CoreOS</span>
-      <span class="right">Browser Edition</span>
+      <span class="left">evoX CoreOS</span><span class="right">Browser Edition</span>
     </a>
   </div>
 </section>
@@ -649,19 +645,20 @@
   </div>
 </footer>
 
-<!-- ========== MODAL AJOUTER ========== -->
+<!-- ========== MODAL ========== -->
 <div class="modal-overlay" id="addModal">
   <div class="modal">
-    <h3 data-i18n="addTitle">Ajouter un raccourci</h3>
+    <h3>
+      <img src="https://img.icons8.com/color/48/plus.png" width="28" alt="">
+      <span data-i18n="addTitle">Ajouter un raccourci</span>
+    </h3>
     
     <input type="text" id="newName" data-i18n-placeholder="namePlaceholder" placeholder="Nom du raccourci">
     <input type="url" id="newUrl" data-i18n-placeholder="urlPlaceholder" placeholder="https://exemple.com">
 
-    <label class="icon-picker-label" data-i18n="chooseIcon">Choisir une icône :</label>
+    <label class="icon-picker-label" data-i18n="chooseIcon">Choisir une icône (ou laisse vide pour récupérer la favicon) :</label>
     
-    <div class="icon-grid" id="iconGrid">
-      <!-- Les icônes seront injectées par JavaScript -->
-    </div>
+    <div class="icon-grid" id="iconGrid"></div>
 
     <div class="modal-actions">
       <button class="btn btn-secondary" onclick="closeAddModal()" data-i18n="cancel">Annuler</button>
@@ -687,7 +684,7 @@
       addTitle: "Ajouter un raccourci",
       namePlaceholder: "Nom du raccourci",
       urlPlaceholder: "https://exemple.com",
-      chooseIcon: "Choisir une icône :",
+      chooseIcon: "Choisir une icône (ou laisse vide pour récupérer la favicon) :",
       cancel: "Annuler",
       confirm: "Ajouter",
       langText: "FR · Français",
@@ -707,7 +704,7 @@
       addTitle: "Add a shortcut",
       namePlaceholder: "Shortcut name",
       urlPlaceholder: "https://example.com",
-      chooseIcon: "Choose an icon:",
+      chooseIcon: "Choose an icon (or leave empty to fetch favicon):",
       cancel: "Cancel",
       confirm: "Add",
       langText: "EN · English",
@@ -769,14 +766,19 @@
     if (e.key === 'Enter') doSearch();
   });
 
-  // ========== ICÔNES DISPONIBLES ==========
+  // ========== ICÔNES ==========
   const availableIcons = [
     // Planètes / Web
     { id: 'globe', url: 'https://img.icons8.com/color/48/globe--v1.png' },
     { id: 'planet', url: 'https://img.icons8.com/color/48/planet.png' },
     { id: 'worldwide', url: 'https://img.icons8.com/color/48/worldwide-location.png' },
     { id: 'internet', url: 'https://img.icons8.com/color/48/internet.png' },
-    { id: 'domain', url: 'https://img.icons8.com/color/48/domain.png' },
+
+    // IA
+    { id: 'grok', url: 'https://img.icons8.com/color/48/artificial-intelligence.png' },
+    { id: 'chatgpt', url: 'https://img.icons8.com/color/48/chatgpt.png' },
+    { id: 'gemini', url: 'https://img.icons8.com/color/48/google-gemini.png' },
+    { id: 'ai', url: 'https://img.icons8.com/color/48/bot.png' },
 
     // Réseaux sociaux
     { id: 'youtube', url: 'https://img.icons8.com/color/48/youtube-play.png' },
@@ -789,33 +791,30 @@
     { id: 'tiktok', url: 'https://img.icons8.com/color/48/tiktok.png' },
     { id: 'facebook', url: 'https://img.icons8.com/color/48/facebook-new.png' },
     { id: 'telegram', url: 'https://img.icons8.com/color/48/telegram-app.png' },
+    { id: 'gmail', url: 'https://img.icons8.com/color/48/gmail.png' },
 
-    // Vidéo / Streaming
+    // Vidéo
     { id: 'video', url: 'https://img.icons8.com/color/48/video.png' },
-    { id: 'cinema', url: 'https://img.icons8.com/color/48/cinema-.png' },
     { id: 'netflix', url: 'https://img.icons8.com/color/48/netflix.png' },
     { id: 'play', url: 'https://img.icons8.com/color/48/play.png' },
 
     // Gaming
     { id: 'controller', url: 'https://img.icons8.com/color/48/controller.png' },
-    { id: 'game', url: 'https://img.icons8.com/color/48/game-controller.png' },
-    { id: 'ps5', url: 'https://img.icons8.com/color/48/playstation.png' },
+    { id: 'ps', url: 'https://img.icons8.com/color/48/playstation.png' },
     { id: 'steam', url: 'https://img.icons8.com/color/48/steam.png' },
 
     // Outils
     { id: 'settings', url: 'https://img.icons8.com/color/48/settings.png' },
-    { id: 'tools', url: 'https://img.icons8.com/color/48/maintenance.png' },
     { id: 'code', url: 'https://img.icons8.com/color/48/source-code.png' },
     { id: 'folder', url: 'https://img.icons8.com/color/48/folder-invoices.png' },
     { id: 'download', url: 'https://img.icons8.com/color/48/download.png' },
     { id: 'cloud', url: 'https://img.icons8.com/color/48/cloud.png' },
     { id: 'link', url: 'https://img.icons8.com/color/48/link.png' },
     { id: 'star', url: 'https://img.icons8.com/color/48/star.png' },
-    { id: 'heart', url: 'https://img.icons8.com/color/48/like.png' },
     { id: 'shop', url: 'https://img.icons8.com/color/48/shop.png' }
   ];
 
-  let selectedIconUrl = availableIcons[0].url; // planète par défaut
+  let selectedIconUrl = null; // null = auto favicon
 
   function buildIconGrid() {
     const grid = document.getElementById('iconGrid');
@@ -835,7 +834,17 @@
     });
   }
 
-  // ========== RACCOURCIS PERSONNALISÉS ==========
+  // ========== FAVICON AUTO ==========
+  function getFavicon(url) {
+    try {
+      const domain = new URL(url.startsWith('http') ? url : 'https://' + url).hostname;
+      return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+    } catch {
+      return availableIcons[0].url; // fallback planète
+    }
+  }
+
+  // ========== RACCOURCIS ==========
   const STORAGE_KEY = 'evoX_custom_shortcuts';
 
   function loadCustomShortcuts() {
@@ -851,7 +860,7 @@
       a.innerHTML = `
         <button class="delete-btn" onclick="event.preventDefault(); deleteShortcut(${index})">×</button>
         <div class="shortcut-icon">
-          <img src="${item.icon || availableIcons[0].url}" alt="">
+          <img src="${item.icon}" alt="" onerror="this.src='${availableIcons[0].url}'">
         </div>
         <div class="shortcut-name">${item.name}</div>
       `;
@@ -866,7 +875,7 @@
   }
 
   function openAddModal() {
-    selectedIconUrl = availableIcons[0].url;
+    selectedIconUrl = null;
     buildIconGrid();
     document.getElementById('addModal').classList.add('show');
     document.getElementById('newName').focus();
@@ -888,12 +897,10 @@
     }
     if (!url.startsWith('http')) url = 'https://' + url;
 
+    const icon = selectedIconUrl || getFavicon(url);
+
     const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    data.push({
-      name,
-      url,
-      icon: selectedIconUrl
-    });
+    data.push({ name, url, icon });
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     closeAddModal();
     loadCustomShortcuts();
