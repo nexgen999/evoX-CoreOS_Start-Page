@@ -241,18 +241,25 @@
     font-weight: 500;
     cursor: pointer;
     border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
     transition: all 0.25s ease;
   }
+  .btn img { width: 16px; height: 16px; }
+
   .btn-secondary {
     background: rgba(255,255,255,0.07);
     color: var(--text);
     border: 1px solid var(--border);
   }
   .btn-secondary:hover { background: rgba(255,255,255,0.13); }
+
   .btn-primary {
     background: linear-gradient(135deg, #00b4ff, #0088ff);
     color: white;
   }
+
   .btn-danger {
     background: rgba(255, 70, 70, 0.18);
     color: #ff6b6b;
@@ -400,25 +407,35 @@
   }
   footer a:hover { color: var(--accent); }
 
+  /* ========== MODAL ========== */
   .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.65);
+    background: rgba(0,0,0,0.7);
     display: none;
     align-items: center;
     justify-content: center;
     z-index: 100;
+    padding: 20px;
   }
   .modal-overlay.show { display: flex; }
+
   .modal {
     background: #121e33;
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: 18px;
     padding: 28px;
-    width: 90%;
-    max-width: 420px;
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
   }
-  .modal h3 { margin-bottom: 18px; }
+
+  .modal h3 {
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+
   .modal input {
     width: 100%;
     background: rgba(255,255,255,0.06);
@@ -427,13 +444,60 @@
     padding: 12px 14px;
     color: var(--text);
     font-size: 14px;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     outline: none;
   }
+  .modal input:focus { border-color: var(--accent); }
+
+  .icon-picker-label {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+    max-height: 280px;
+    overflow-y: auto;
+    padding-right: 6px;
+  }
+
+  .icon-option {
+    width: 52px;
+    height: 52px;
+    background: rgba(255,255,255,0.05);
+    border: 2px solid transparent;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .icon-option img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+  }
+  .icon-option:hover {
+    background: rgba(0, 180, 255, 0.15);
+    transform: scale(1.08);
+  }
+  .icon-option.selected {
+    border-color: var(--accent);
+    background: rgba(0, 180, 255, 0.22);
+    box-shadow: 0 0 12px rgba(0, 212, 255, 0.3);
+  }
+
   .modal-actions {
     display: flex;
     gap: 10px;
     justify-content: flex-end;
+    margin-top: 8px;
   }
 
   @media (max-width: 700px) {
@@ -499,54 +563,56 @@
     </div>
     <div class="section-actions">
       <button class="btn btn-secondary" id="manageBtn" onclick="toggleManage()">
-        <span data-i18n="manage">✎ GÉRER</span>
+        <img src="https://img.icons8.com/color/48/settings.png" alt="">
+        <span data-i18n="manage">GÉRER</span>
       </button>
       <button class="btn btn-primary" onclick="openAddModal()">
-        <span data-i18n="add">+ AJOUTER</span>
+        <img src="https://img.icons8.com/color/48/plus.png" alt="">
+        <span data-i18n="add">AJOUTER</span>
       </button>
     </div>
   </div>
 
   <div class="shortcuts" id="shortcutsGrid">
-    <!-- 1. Gears -->
+    <!-- 1 -->
     <a class="shortcut" href="https://nexgen999.github.io/ps5webkit/" target="_blank">
       <div class="shortcut-icon">
-        <img src="https://img.icons8.com/color/48/gears.png" alt="Gears">
+        <img src="https://img.icons8.com/color/48/gears.png" alt="">
       </div>
       <div class="shortcut-name">evoX W2JB</div>
     </a>
-    <!-- 2. Flask -->
+    <!-- 2 -->
     <a class="shortcut" href="https://nexgen999.github.io/ps5webkit/" target="_blank">
       <div class="shortcut-icon">
-        <img src="https://img.icons8.com/color/48/test-tube.png" alt="Flask">
+        <img src="https://img.icons8.com/color/48/test-tube.png" alt="">
       </div>
       <div class="shortcut-name">evox W2JB Experimental</div>
     </a>
-    <!-- 3. House -->
+    <!-- 3 -->
     <a class="shortcut" href="https://nexgen999.github.io/evoX-CoreOS-WebUI/" target="_blank">
       <div class="shortcut-icon">
-        <img src="https://img.icons8.com/color/48/home.png" alt="Home">
+        <img src="https://img.icons8.com/color/48/home.png" alt="">
       </div>
       <div class="shortcut-name">evoX CoreOS WebUI</div>
     </a>
-    <!-- 4. Store -->
+    <!-- 4 -->
     <a class="shortcut" href="https://nexgen999.github.io/evoX-CoreOS-WebUI/pegasus-store_en.html" target="_blank">
       <div class="shortcut-icon">
-        <img src="https://img.icons8.com/color/48/shop.png" alt="Store">
+        <img src="https://img.icons8.com/color/48/shop.png" alt="">
       </div>
       <div class="shortcut-name">evoX-CoreOS - Pegasus Store V1</div>
     </a>
-    <!-- 5. Warehouse -->
+    <!-- 5 -->
     <a class="shortcut" href="https://nexgen999.github.io/evoX-CoreOS_Pegasus-Store/" target="_blank">
       <div class="shortcut-icon">
-        <img src="https://img.icons8.com/color/48/warehouse.png" alt="Warehouse">
+        <img src="https://img.icons8.com/color/48/warehouse.png" alt="">
       </div>
       <div class="shortcut-name">evoX-CoreOS - Pegasus Store V2</div>
     </a>
-    <!-- 6. Database -->
+    <!-- 6 -->
     <a class="shortcut" href="https://nexgen999.github.io/PS5-Repository-List/" target="_blank">
       <div class="shortcut-icon">
-        <img src="https://img.icons8.com/color/48/database.png" alt="Database">
+        <img src="https://img.icons8.com/color/48/database.png" alt="">
       </div>
       <div class="shortcut-name">PS5-Repository-List</div>
     </a>
@@ -583,13 +649,20 @@
   </div>
 </footer>
 
-<!-- Modal -->
+<!-- ========== MODAL AJOUTER ========== -->
 <div class="modal-overlay" id="addModal">
   <div class="modal">
     <h3 data-i18n="addTitle">Ajouter un raccourci</h3>
+    
     <input type="text" id="newName" data-i18n-placeholder="namePlaceholder" placeholder="Nom du raccourci">
     <input type="url" id="newUrl" data-i18n-placeholder="urlPlaceholder" placeholder="https://exemple.com">
-    <input type="text" id="newIcon" data-i18n-placeholder="iconPlaceholder" placeholder="Emoji ou laisse vide (🔗)">
+
+    <label class="icon-picker-label" data-i18n="chooseIcon">Choisir une icône :</label>
+    
+    <div class="icon-grid" id="iconGrid">
+      <!-- Les icônes seront injectées par JavaScript -->
+    </div>
+
     <div class="modal-actions">
       <button class="btn btn-secondary" onclick="closeAddModal()" data-i18n="cancel">Annuler</button>
       <button class="btn btn-primary" onclick="addShortcut()" data-i18n="confirm">Ajouter</button>
@@ -598,6 +671,7 @@
 </div>
 
 <script>
+  // ========== TRADUCTIONS ==========
   const translations = {
     fr: {
       subtitle: "PlayStation®5 Web Experience",
@@ -606,14 +680,14 @@
       searchPlaceholder: "Entrer une URL ou rechercher...",
       searchHint: "Saisissez une URL ou un terme de recherche, puis appuyez sur Entrée.",
       shortcuts: "MES RACCOURCIS",
-      manage: "✎ GÉRER",
-      add: "+ AJOUTER",
+      manage: "GÉRER",
+      add: "AJOUTER",
       badges: "• BADGES DU FOOTER",
       footerDesc: "Conçue pour une navigation simple et fluide sur PS5.",
       addTitle: "Ajouter un raccourci",
       namePlaceholder: "Nom du raccourci",
       urlPlaceholder: "https://exemple.com",
-      iconPlaceholder: "Emoji ou laisse vide",
+      chooseIcon: "Choisir une icône :",
       cancel: "Annuler",
       confirm: "Ajouter",
       langText: "FR · Français",
@@ -626,14 +700,14 @@
       searchPlaceholder: "Enter a URL or search...",
       searchHint: "Type a URL or search term, then press Enter.",
       shortcuts: "MY SHORTCUTS",
-      manage: "✎ MANAGE",
-      add: "+ ADD",
+      manage: "MANAGE",
+      add: "ADD",
       badges: "• FOOTER BADGES",
       footerDesc: "Designed for simple and smooth navigation on PS5.",
       addTitle: "Add a shortcut",
       namePlaceholder: "Shortcut name",
       urlPlaceholder: "https://example.com",
-      iconPlaceholder: "Emoji or leave empty",
+      chooseIcon: "Choose an icon:",
       cancel: "Cancel",
       confirm: "Add",
       langText: "EN · English",
@@ -664,6 +738,7 @@
     applyLang();
   }
 
+  // ========== RECHERCHE ==========
   let currentEngine = 'google';
   const engines = {
     google: 'https://www.google.com/search?q=',
@@ -694,6 +769,73 @@
     if (e.key === 'Enter') doSearch();
   });
 
+  // ========== ICÔNES DISPONIBLES ==========
+  const availableIcons = [
+    // Planètes / Web
+    { id: 'globe', url: 'https://img.icons8.com/color/48/globe--v1.png' },
+    { id: 'planet', url: 'https://img.icons8.com/color/48/planet.png' },
+    { id: 'worldwide', url: 'https://img.icons8.com/color/48/worldwide-location.png' },
+    { id: 'internet', url: 'https://img.icons8.com/color/48/internet.png' },
+    { id: 'domain', url: 'https://img.icons8.com/color/48/domain.png' },
+
+    // Réseaux sociaux
+    { id: 'youtube', url: 'https://img.icons8.com/color/48/youtube-play.png' },
+    { id: 'discord', url: 'https://img.icons8.com/color/48/discord-logo.png' },
+    { id: 'twitter', url: 'https://img.icons8.com/color/48/twitterx.png' },
+    { id: 'reddit', url: 'https://img.icons8.com/color/48/reddit.png' },
+    { id: 'github', url: 'https://img.icons8.com/color/48/github.png' },
+    { id: 'twitch', url: 'https://img.icons8.com/color/48/twitch.png' },
+    { id: 'instagram', url: 'https://img.icons8.com/color/48/instagram-new.png' },
+    { id: 'tiktok', url: 'https://img.icons8.com/color/48/tiktok.png' },
+    { id: 'facebook', url: 'https://img.icons8.com/color/48/facebook-new.png' },
+    { id: 'telegram', url: 'https://img.icons8.com/color/48/telegram-app.png' },
+
+    // Vidéo / Streaming
+    { id: 'video', url: 'https://img.icons8.com/color/48/video.png' },
+    { id: 'cinema', url: 'https://img.icons8.com/color/48/cinema-.png' },
+    { id: 'netflix', url: 'https://img.icons8.com/color/48/netflix.png' },
+    { id: 'play', url: 'https://img.icons8.com/color/48/play.png' },
+
+    // Gaming
+    { id: 'controller', url: 'https://img.icons8.com/color/48/controller.png' },
+    { id: 'game', url: 'https://img.icons8.com/color/48/game-controller.png' },
+    { id: 'ps5', url: 'https://img.icons8.com/color/48/playstation.png' },
+    { id: 'steam', url: 'https://img.icons8.com/color/48/steam.png' },
+
+    // Outils
+    { id: 'settings', url: 'https://img.icons8.com/color/48/settings.png' },
+    { id: 'tools', url: 'https://img.icons8.com/color/48/maintenance.png' },
+    { id: 'code', url: 'https://img.icons8.com/color/48/source-code.png' },
+    { id: 'folder', url: 'https://img.icons8.com/color/48/folder-invoices.png' },
+    { id: 'download', url: 'https://img.icons8.com/color/48/download.png' },
+    { id: 'cloud', url: 'https://img.icons8.com/color/48/cloud.png' },
+    { id: 'link', url: 'https://img.icons8.com/color/48/link.png' },
+    { id: 'star', url: 'https://img.icons8.com/color/48/star.png' },
+    { id: 'heart', url: 'https://img.icons8.com/color/48/like.png' },
+    { id: 'shop', url: 'https://img.icons8.com/color/48/shop.png' }
+  ];
+
+  let selectedIconUrl = availableIcons[0].url; // planète par défaut
+
+  function buildIconGrid() {
+    const grid = document.getElementById('iconGrid');
+    grid.innerHTML = '';
+    
+    availableIcons.forEach(icon => {
+      const div = document.createElement('div');
+      div.className = 'icon-option';
+      if (icon.url === selectedIconUrl) div.classList.add('selected');
+      div.innerHTML = `<img src="${icon.url}" alt="${icon.id}">`;
+      div.onclick = () => {
+        document.querySelectorAll('.icon-option').forEach(el => el.classList.remove('selected'));
+        div.classList.add('selected');
+        selectedIconUrl = icon.url;
+      };
+      grid.appendChild(div);
+    });
+  }
+
+  // ========== RACCOURCIS PERSONNALISÉS ==========
   const STORAGE_KEY = 'evoX_custom_shortcuts';
 
   function loadCustomShortcuts() {
@@ -709,7 +851,7 @@
       a.innerHTML = `
         <button class="delete-btn" onclick="event.preventDefault(); deleteShortcut(${index})">×</button>
         <div class="shortcut-icon">
-          <span style="font-size:28px">${item.icon || '🔗'}</span>
+          <img src="${item.icon || availableIcons[0].url}" alt="">
         </div>
         <div class="shortcut-name">${item.name}</div>
       `;
@@ -724,26 +866,34 @@
   }
 
   function openAddModal() {
+    selectedIconUrl = availableIcons[0].url;
+    buildIconGrid();
     document.getElementById('addModal').classList.add('show');
+    document.getElementById('newName').focus();
   }
+
   function closeAddModal() {
     document.getElementById('addModal').classList.remove('show');
     document.getElementById('newName').value = '';
     document.getElementById('newUrl').value = '';
-    document.getElementById('newIcon').value = '';
   }
 
   function addShortcut() {
     const name = document.getElementById('newName').value.trim();
     let url = document.getElementById('newUrl').value.trim();
-    const icon = document.getElementById('newIcon').value.trim() || '🔗';
+
     if (!name || !url) {
       alert(currentLang === 'fr' ? 'Nom et URL obligatoires' : 'Name and URL required');
       return;
     }
     if (!url.startsWith('http')) url = 'https://' + url;
+
     const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    data.push({ name, url, icon });
+    data.push({
+      name,
+      url,
+      icon: selectedIconUrl
+    });
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     closeAddModal();
     loadCustomShortcuts();
@@ -765,6 +915,7 @@
     btn.classList.toggle('active', manageMode);
   }
 
+  // Init
   applyLang();
   loadCustomShortcuts();
 </script>
