@@ -1,0 +1,152 @@
+{
+  "title": "evoX Start Page Browser",
+  "language": "fr",
+  "searchEngine": "https://www.google.com/search?q={query}",
+  "brand": {
+    "name": "evoX Start",
+    "icon": "https://cdn.jsdelivr.net/gh/selfhst/icons/png/playstation-light.png",
+    "iconType": "image",
+    "localAssetFallback": "assets/playstation-light.png",
+    "url": "/"
+  },
+  "profile": {
+    "name": "nexgen999",
+    "avatar": "https://github.com/nexgen999.png",
+    "github": "https://github.com/nexgen999",
+    "online": true
+  },
+  "appearance": {
+    "showClock": false,
+    "showLanguageSelector": true,
+    "animation": true,
+    "theme": "ps5-dark",
+    "showGamepadHints": false,
+    "showConfigButtons": false
+  },
+  "footer": {
+    "text": "evoX Start Page Browser",
+    "subtext": "Conçue pour une navigation simple et fluide sur PS5.",
+    "copyright": "evoX Ecosystem • 2026",
+    "badges": [
+      {
+        "id": "playstation",
+        "style": "rectangular",
+        "label": "PlayStation®",
+        "subLabel": "PS5 BROWSER",
+        "icon": "fa-brands fa-playstation",
+        "iconImage": "https://cdn.jsdelivr.net/gh/selfhst/icons/png/playstation-light.png",
+        "url": "https://www.playstation.com",
+        "bgColor": "#003791",
+        "textColor": "#ffffff",
+        "accentColor": "#0070d1",
+        "border": true
+      },
+      {
+        "id": "github",
+        "style": "rectangular",
+        "label": "GitHub",
+        "subLabel": "nexgen999",
+        "icon": "fa-brands fa-github",
+        "url": "https://github.com/nexgen999",
+        "bgColor": "#161b22",
+        "textColor": "#e6edf3",
+        "accentColor": "#30363d",
+        "border": true
+      },
+      {
+        "id": "evox",
+        "style": "rectangular",
+        "label": "evoX CoreOS",
+        "subLabel": "Browser Edition",
+        "icon": "assets/evox.svg",
+        "iconType": "image",
+        "url": "https://github.com/nexgen999/evoX-CoreOS_Start-Page",
+        "bgColor": "#0f2038",
+        "textColor": "#38bdf8",
+        "accentColor": "#0284c7",
+        "border": true
+      },
+      {
+        "id": "evox-stars",
+        "style": "rectangular",
+        "label": "Stars",
+        "subLabel": "2 Stars",
+        "icon": "fa-solid fa-star text-amber-400",
+        "url": "https://github.com/nexgen999/evoX-CoreOS_Start-Page/stargazers",
+        "bgColor": "#181a20",
+        "textColor": "#facc15",
+        "accentColor": "#ca8a04",
+        "border": true
+      },
+      {
+        "id": "evox-downloads",
+        "style": "rectangular",
+        "label": "Downloads",
+        "subLabel": "38 DL",
+        "icon": "fa-solid fa-download text-emerald-400",
+        "url": "https://github.com/nexgen999/evoX-CoreOS_Start-Page/releases",
+        "bgColor": "#0f231a",
+        "textColor": "#4ade80",
+        "accentColor": "#16a34a",
+        "border": true
+      }
+    ],
+    "links": [
+      {
+        "name": "evoX Start-Page",
+        "url": "https://github.com/nexgen999/evoX-CoreOS_Start-Page"
+      },
+      {
+        "name": "evoX CoreOS",
+        "url": "https://github.com/nexgen999/evoX-CoreOS"
+      },
+      {
+        "name": "evoX Store",
+        "url": "https://github.com/nexgen999/EvoX-Universal.Store"
+      },
+      {
+        "name": "GitHub · nexgen999",
+        "url": "https://github.com/nexgen999"
+      }
+    ]
+  },
+  "shortcuts": [
+    {
+      "name": "evoX W2JB",
+      "url": "https://nexgen999.github.io/ps5webkit/",
+      "icon": "assets/evox.svg",
+      "type": "image"
+    },
+    {
+      "name": "evox W2JB Experimental",
+      "url": "https://nexgen999.github.io/ps5webkit/experimental/relapse/",
+      "icon": "fa-solid fa-flask",
+      "type": "fontawesome"
+    },
+    {
+      "name": "evoX CoreOS WebUI",
+      "url": "https://nexgen999.github.io/evoX-CoreOS-WebUI/",
+      "icon": "fa-solid fa-display",
+      "type": "fontawesome"
+    },
+    {
+      "name": "evoX-CoreOS - Pegasus Store V1",
+      "url": "https://nexgen999.github.io/evoX-CoreOS-WebUI/pegasus-store_en.html",
+      "icon": "fa-solid fa-store",
+      "type": "fontawesome"
+    },
+    {
+      "name": "evoX-CoreOS - Pegasus Store V2",
+      "url": "https://nexgen999.github.io/evoX-CoreOS_Pegasus-Store/",
+      "icon": "fa-solid fa-bag-shopping",
+      "type": "fontawesome"
+    },
+    {
+      "name": "PS5-Repository-List",
+      "url": "https://nexgen999.github.io/PS5-Repository-List/",
+      "icon": "fa-solid fa-folder-open",
+      "type": "fontawesome"
+    }
+  ],
+  "customShortcuts": []
+}
