@@ -120,15 +120,15 @@
       "type": "image"
     },
     {
-      "name": "evoX CoreOS WebUI",
-      "url": "https://nexgen999.github.io/evoX-CoreOS-WebUI/",
-      "icon": "https://img.icons8.com/fluency/96/domain.png",
+      "name": "evoX-CoreOS - Linux Loader",
+      "url": "https://nexgen999.github.io/ps5webkit/linux/relapse/",
+      "icon": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/linux.png",
       "type": "image"
     },
     {
-      "name": "evoX-CoreOS - Pegasus Store V1",
-      "url": "https://nexgen999.github.io/evoX-CoreOS-WebUI/pegasus-store_en.html",
-      "icon": "https://img.icons8.com/fluency/96/shopping-bag.png",
+      "name": "evoX CoreOS WebUI",
+      "url": "https://nexgen999.github.io/evoX-CoreOS-WebUI/",
+      "icon": "https://img.icons8.com/fluency/96/domain.png",
       "type": "image"
     },
     {
