@@ -80,7 +80,16 @@ footer a{color:#93c5fd;text-decoration:none}
   <footer>
     <div id="footerText">evoX Start Page Browser</div>
     <div id="footerSub">Conçue pour une navigation simple et fluide sur PS5.</div>
-    <div id="footerBadges" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px"></div>
+    
+    <!-- Vrais chiffres GitHub en temps réel (Stars & Downloads) -->
+    <div id="footerBadges" style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:14px">
+      <a href="https://github.com/nexgen999/evoX-CoreOS" target="_blank" rel="noopener">
+        <img src="https://img.shields.io/github/stars/nexgen999/evoX-CoreOS?style=flat&logo=github&color=yellow" alt="GitHub Stars" style="height:24px;vertical-align:middle;">
+      </a>
+      <a href="https://github.com/nexgen999/evoX-CoreOS/releases" target="_blank" rel="noopener">
+        <img src="https://img.shields.io/github/downloads/nexgen999/evoX-CoreOS/total?style=flat&logo=github&color=blue" alt="GitHub Downloads" style="height:24px;vertical-align:middle;">
+      </a>
+    </div>
   </footer>
 </main>
 
@@ -137,20 +146,6 @@ function render(){
 $('searchForm').addEventListener('submit',e=>{e.preventDefault();const d=normaliseInput($('searchInput').value);if(d)location.href=d});
 $('language').addEventListener('change',e=>applyLanguage(e.target.value));
 
-function renderBadges(){
-  const holder=$('footerBadges');holder.textContent='';
-  (config.footer&&Array.isArray(config.footer.badges)?config.footer.badges:[]).forEach(b=>{
-    if(!b.url||!safeUrl(b.url))return;
-    const a=document.createElement('a');a.href=b.url;a.rel='noopener';
-    
-    // Restauration exacte du format d'origine récupéré depuis config.json
-    a.textContent = [b.label, b.subLabel].filter(Boolean).join(' ');
-    
-    a.style.cssText='display:inline-block;padding:7px 10px;border-radius:8px;text-decoration:none;font-size:11px;font-weight:700;border:1px solid '+(b.accentColor||'#334155')+';background:'+(b.bgColor||'#111827')+';color:'+(b.textColor||'#e5e7eb');
-    holder.appendChild(a);
-  });
-}
-
 function setConfig(c){
   config=c||{};
   if(config.title)document.title=config.title;
@@ -161,7 +156,6 @@ function setConfig(c){
   if(config.profile){$('profileName').textContent=config.profile.name||'nexgen999';$('profileLink').href=safeUrl(config.profile.github)||'https://github.com/nexgen999';if(config.profile.avatar)$('avatar').src=config.profile.avatar}
   shortcuts=Array.isArray(config.shortcuts)?config.shortcuts.filter(s=>s&&safeUrl(s.url)).map(s=>({name:s.name||s.url,url:s.url,icon:s.icon||''})):[];
   $('footerText').textContent=(config.footer&&config.footer.text)||'evoX Start Page Browser';
-  renderBadges();
   const preferred=(()=>{try{return localStorage.getItem('evox-start-language')}catch{return null}})();
   applyLanguage(preferred||config.language||'fr');
   render();
