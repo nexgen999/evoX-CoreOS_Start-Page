@@ -34,7 +34,6 @@ button{cursor:pointer}
 .primary{border:0;border-radius:10px;background:var(--blue);color:white;padding:0 22px;min-height:48px;font-weight:700}
 .section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 14px}
 .section-head h2{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:0}
-.manage{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:9px;padding:8px 12px}
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .tile{display:flex;align-items:center;gap:13px;min-width:0;min-height:88px;padding:14px;background:linear-gradient(135deg,var(--panel),#0c1422);border:2px solid var(--border);border-radius:13px;color:var(--text);text-decoration:none;outline:0;transition:border-color .12s,background .12s}
 .tile:focus,.tile:focus-visible,.tile:hover{border-color:var(--blue);background:var(--panel2)}
@@ -44,14 +43,6 @@ button{cursor:pointer}
 .empty{padding:24px;text-align:center;border:1px dashed var(--border);border-radius:12px;color:var(--muted)}
 footer{margin-top:32px;text-align:center;color:#718096;font-size:12px}
 footer a{color:#93c5fd;text-decoration:none}
-.dialog-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;padding:18px;z-index:5}
-.dialog-backdrop.open{display:flex}
-.dialog{width:min(480px,100%);max-height:85vh;overflow:auto;background:#0f172a;border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:0 25px 70px #0009}
-.dialog h2{margin:0 0 16px;font-size:20px}
-.dialog label{display:block;color:var(--muted);font-size:13px;margin:12px 0 6px}
-.dialog input{width:100%;height:44px;padding:0 11px;border:1px solid var(--border);border-radius:9px;background:#080f1c;color:var(--text)}
-.dialog-buttons{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
-.secondary{border:1px solid var(--border);border-radius:9px;background:#182337;color:var(--text);padding:10px 15px}
 @media(max-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.tile{padding:11px;gap:9px;min-height:78px}.tile img,.tile .fallback{width:38px;height:38px;flex-basis:38px}.profile span{display:none}}
 @media(max-width:420px){.grid{grid-template-columns:1fr}.brand img{width:34px;height:34px}.top{align-items:flex-start}.search{padding:6px}.primary{padding:0 15px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
@@ -81,9 +72,9 @@ footer a{color:#93c5fd;text-decoration:none}
   </form>
 
   <section>
-    <div class="section-head"><h2 id="shortcutsTitle">Accès rapides</h2><button class="manage" id="addButton" type="button">+ Ajouter</button></div>
+    <div class="section-head"><h2 id="shortcutsTitle">Accès rapides</h2></div>
     <div class="grid" id="shortcutGrid"></div>
-    <div class="empty" id="emptyState" hidden>Aucun raccourci. Ajoutez un site pour commencer.</div>
+    <div class="empty" id="emptyState" hidden>Aucun raccourci disponible.</div>
   </section>
 
   <footer>
@@ -93,119 +84,87 @@ footer a{color:#93c5fd;text-decoration:none}
   </footer>
 </main>
 
-<div class="dialog-backdrop" id="dialogBackdrop" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
-  <form class="dialog" id="shortcutForm">
-    <h2 id="dialogTitle">Ajouter un raccourci</h2>
-    <label for="shortcutName" id="nameLabel">Nom du site</label><input id="shortcutName" maxlength="80" required>
-    <label for="shortcutUrl" id="urlLabel">Adresse URL</label><input id="shortcutUrl" type="url" placeholder="https://example.com" required>
-    <label for="shortcutIcon" id="iconLabel">Icône (URL facultative)</label><input id="shortcutIcon" type="url" placeholder="https://example.com/icon.png">
-    <div class="dialog-buttons"><button class="secondary" id="cancelButton" type="button">Annuler</button><button class="primary" id="saveButton" type="submit">Enregistrer</button></div>
-  </form>
-</div>
-
 <script>
 (function(){
 'use strict';
 const $=id=>document.getElementById(id);
-const STORAGE_KEY='evox-start-custom-shortcuts-v1';
 const TXT={
- fr:{subtitle:'PAGE DE DÉMARRAGE',search:'Rechercher sur Google ou saisir une URL…',go:'Aller',shortcuts:'Accès rapides',add:'+ Ajouter',empty:'Aucun raccourci. Ajoutez un site pour commencer.',addTitle:'Ajouter un raccourci',editTitle:'Modifier le raccourci',name:'Nom du site',url:'Adresse URL',icon:'Icône (URL facultative)',cancel:'Annuler',save:'Enregistrer',footer:'Conçue pour une navigation simple et fluide sur PS5.'},
- en:{subtitle:'START PAGE BROWSER',search:'Search Google or enter a URL…',go:'Go',shortcuts:'Quick access',add:'+ Add',empty:'No shortcuts yet. Add a site to get started.',addTitle:'Add shortcut',editTitle:'Edit shortcut',name:'Website name',url:'Website URL',icon:'Icon (optional URL)',cancel:'Cancel',save:'Save',footer:'Designed for simple, smooth navigation on PS5.'}
+  fr:{subtitle:'PAGE DE DÉMARRAGE',search:'Rechercher sur Google ou saisir une URL…',go:'Aller',shortcuts:'Accès rapides',empty:'Aucun raccourci disponible.',footer:'Conçue pour une navigation simple et fluide sur PS5.'},
+  en:{subtitle:'START PAGE BROWSER',search:'Search Google or enter a URL…',go:'Go',shortcuts:'Quick access',empty:'No shortcuts available.',footer:'Designed for simple, smooth navigation on PS5.'}
 };
 let config={};
 let shortcuts=[];
-let editingIndex=-1;
 let language='fr';
 function safeUrl(v){try{const u=new URL(v);return ['http:','https:'].includes(u.protocol)?u.href:null}catch{return null}}
 function normaliseInput(raw){
- const v=raw.trim(); if(!v)return null;
- if(/^[a-z][a-z0-9+.-]*:/i.test(v))return v;
- if(!/\s/.test(v)&&(/^(localhost|127(?:\.\d{1,3}){3})(:\d+)?(\/.*)?$/i.test(v)||/^(?:[\w-]+\.)+[a-z]{2,}(?::\d+)?(?:\/.*)?$/i.test(v)))return 'https://'+v;
- return (config.searchEngine||'https://www.google.com/search?q={query}').replace('{query}',encodeURIComponent(v));
+  const v=raw.trim(); if(!v)return null;
+  if(/^[a-z][a-z0-9+.-]*:/i.test(v))return v;
+  if(!/\s/.test(v)&&(/^(localhost|127(?:\.\d{1,3}){3})(:\d+)?(\/.*)?$/i.test(v)||/^(?:[\w-]+\.)+[a-z]{2,}(?::\d+)?(?:\/.*)?$/i.test(v)))return 'https://'+v;
+  return (config.searchEngine||'https://www.google.com/search?q={query}').replace('{query}',encodeURIComponent(v));
 }
 function applyLanguage(lang){
- language=TXT[lang]?lang:'fr'; const t=TXT[language];
- document.documentElement.lang=language;
- $('language').value=language;
- $('subtitle').textContent=t.subtitle;
- $('searchInput').placeholder=t.search;
- $('goButton').textContent=t.go;
- $('shortcutsTitle').textContent=t.shortcuts;
- $('addButton').textContent=t.add;
- $('emptyState').textContent=t.empty;
- $('dialogTitle').textContent=editingIndex<0?t.addTitle:t.editTitle;
- $('nameLabel').textContent=t.name;$('urlLabel').textContent=t.url;$('iconLabel').textContent=t.icon;
- $('cancelButton').textContent=t.cancel;$('saveButton').textContent=t.save;
- $('footerSub').textContent=(config.footer&&config.footer.subtext)||t.footer;
- try{localStorage.setItem('evox-start-language',language)}catch{}
+  language=TXT[lang]?lang:'fr'; const t=TXT[language];
+  document.documentElement.lang=language;
+  $('language').value=language;
+  $('subtitle').textContent=t.subtitle;
+  $('searchInput').placeholder=t.search;
+  $('goButton').textContent=t.go;
+  $('shortcutsTitle').textContent=t.shortcuts;
+  $('emptyState').textContent=t.empty;
+  $('footerSub').textContent=(config.footer&&config.footer.subtext)||t.footer;
+  try{localStorage.setItem('evox-start-language',language)}catch{}
 }
 function iconFallback(title){
- const el=document.createElement('div');el.className='fallback';el.textContent=(title||'?').trim().charAt(0).toUpperCase()||'?';return el;
+  const el=document.createElement('div');el.className='fallback';el.textContent=(title||'?').trim().charAt(0).toUpperCase()||'?';return el;
 }
 function render(){
- const grid=$('shortcutGrid');grid.textContent='';
- const all=shortcuts.concat(readCustom());
- $('emptyState').hidden=all.length>0;
- all.forEach((s,i)=>{
-   const url=safeUrl(s.url);if(!url)return;
-   const a=document.createElement('a');a.className='tile';a.href=url;a.setAttribute('aria-label',s.name||url);
-   a.rel='noopener';a.tabIndex=0;
-   const icon=s.icon||'';
-   if(icon){
-     const img=document.createElement('img');img.src=icon;img.alt='';img.loading='lazy';img.decoding='async';
-     img.onerror=()=>{img.replaceWith(iconFallback(s.name))};a.appendChild(img);
-   }else a.appendChild(iconFallback(s.name));
-   const label=document.createElement('span');label.className='label';label.textContent=s.name||url;a.appendChild(label);
-   grid.appendChild(a);
- });
+  const grid=$('shortcutGrid');grid.textContent='';
+  const all=shortcuts;
+  $('emptyState').hidden=all.length>0;
+  all.forEach((s)=>{
+    const url=safeUrl(s.url);if(!url)return;
+    const a=document.createElement('a');a.className='tile';a.href=url;a.setAttribute('aria-label',s.name||url);
+    a.rel='noopener';a.tabIndex=0;
+    const icon=s.icon||'';
+    if(icon){
+      const img=document.createElement('img');img.src=icon;img.alt='';img.loading='lazy';img.decoding='async';
+      img.onerror=()=>{img.replaceWith(iconFallback(s.name))};a.appendChild(img);
+    }else a.appendChild(iconFallback(s.name));
+    const label=document.createElement('span');label.className='label';label.textContent=s.name||url;a.appendChild(label);
+    grid.appendChild(a);
+  });
 }
-function readCustom(){try{const v=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return Array.isArray(v)?v.filter(x=>x&&safeUrl(x.url)):[]}catch{return[]}}
-function saveCustom(list){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(list))}catch{}}
-function openDialog(index=-1){
- editingIndex=index;const t=TXT[language];$('dialogTitle').textContent=index<0?t.addTitle:t.editTitle;
- const item=index<0?{name:'',url:'',icon:''}:readCustom()[index]||{name:'',url:'',icon:''};
- $('shortcutName').value=item.name;$('shortcutUrl').value=item.url;$('shortcutIcon').value=item.icon||'';
- $('dialogBackdrop').classList.add('open');$('shortcutName').focus();
-}
-function closeDialog(){$('dialogBackdrop').classList.remove('open')}
 $('searchForm').addEventListener('submit',e=>{e.preventDefault();const d=normaliseInput($('searchInput').value);if(d)location.href=d});
 $('language').addEventListener('change',e=>applyLanguage(e.target.value));
-$('addButton').addEventListener('click',()=>openDialog(-1));
-$('cancelButton').addEventListener('click',closeDialog);
-$('dialogBackdrop').addEventListener('click',e=>{if(e.target===$('dialogBackdrop'))closeDialog()});
-$('shortcutForm').addEventListener('submit',e=>{
- e.preventDefault();
- const name=$('shortcutName').value.trim(),url=safeUrl($('shortcutUrl').value.trim()),icon=safeUrl($('shortcutIcon').value.trim());
- if(!name||!url){$('shortcutUrl').focus();return}
- const list=readCustom(),item={name,url,icon:icon||''};
- if(editingIndex>=0&&editingIndex<list.length)list[editingIndex]=item;else list.push(item);
- saveCustom(list);closeDialog();render();
-});
-// Keep the interface usable with a keyboard or controller that sends keyboard events.
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDialog()});
+
 function renderBadges(){
- const holder=$('footerBadges');holder.textContent='';
- (config.footer&&Array.isArray(config.footer.badges)?config.footer.badges:[]).forEach(b=>{
-  if(!b.url||!safeUrl(b.url))return;
-  const a=document.createElement('a');a.href=b.url;a.rel='noopener';a.textContent=[b.label,b.subLabel].filter(Boolean).join(' · ');
-  a.style.cssText='display:inline-block;padding:7px 10px;border-radius:8px;text-decoration:none;font-size:11px;font-weight:700;border:1px solid '+(b.accentColor||'#334155')+';background:'+(b.bgColor||'#111827')+';color:'+(b.textColor||'#e5e7eb');
-  holder.appendChild(a);
- });
+  const holder=$('footerBadges');holder.textContent='';
+  (config.footer&&Array.isArray(config.footer.badges)?config.footer.badges:[]).forEach(b=>{
+    if(!b.url||!safeUrl(b.url))return;
+    const a=document.createElement('a');a.href=b.url;a.rel='noopener';
+    
+    // Correction pour afficher proprement le libellé et le sous-libellé (chiffres stars/downloads)
+    const badgeTextParts = [b.label, b.subLabel].filter(Boolean);
+    a.textContent = badgeTextParts.join(' : ');
+    
+    a.style.cssText='display:inline-block;padding:7px 10px;border-radius:8px;text-decoration:none;font-size:11px;font-weight:700;border:1px solid '+(b.accentColor||'#334155')+';background:'+(b.bgColor||'#111827')+';color:'+(b.textColor||'#e5e7eb');
+    holder.appendChild(a);
+  });
 }
 function setConfig(c){
- config=c||{};
- if(config.title)document.title=config.title;
- if(config.brand&&config.brand.icon){
-  const img=$('brandIcon');img.src=config.brand.localAssetFallback||config.brand.icon;
-  img.onerror=()=>{if(img.src!==config.brand.icon)img.src=config.brand.icon;else img.style.display='none'};
- }
- if(config.profile){$('profileName').textContent=config.profile.name||'nexgen999';$('profileLink').href=safeUrl(config.profile.github)||'https://github.com/nexgen999';if(config.profile.avatar)$('avatar').src=config.profile.avatar}
- shortcuts=Array.isArray(config.shortcuts)?config.shortcuts.filter(s=>s&&safeUrl(s.url)).map(s=>({name:s.name||s.url,url:s.url,icon:s.icon||''})):[];
- $('footerText').textContent=(config.footer&&config.footer.text)||'evoX Start Page Browser';
- renderBadges();
- const preferred=(()=>{try{return localStorage.getItem('evox-start-language')}catch{return null}})();
- applyLanguage(preferred||config.language||'fr');
- render();
+  config=c||{};
+  if(config.title)document.title=config.title;
+  if(config.brand&&config.brand.icon){
+    const img=$('brandIcon');img.src=config.brand.localAssetFallback||config.brand.icon;
+    img.onerror=()=>{if(img.src!==config.brand.icon)img.src=config.brand.icon;else img.style.display='none'};
+  }
+  if(config.profile){$('profileName').textContent=config.profile.name||'nexgen999';$('profileLink').href=safeUrl(config.profile.github)||'https://github.com/nexgen999';if(config.profile.avatar)$('avatar').src=config.profile.avatar}
+  shortcuts=Array.isArray(config.shortcuts)?config.shortcuts.filter(s=>s&&safeUrl(s.url)).map(s=>({name:s.name||s.url,url:s.url,icon:s.icon||''})):[];
+  $('footerText').textContent=(config.footer&&config.footer.text)||'evoX Start Page Browser';
+  renderBadges();
+  const preferred=(()=>{try{return localStorage.getItem('evox-start-language')}catch{return null}})();
+  applyLanguage(preferred||config.language||'fr');
+  render();
 }
 fetch('./config.json',{cache:'force-cache'}).then(r=>{if(!r.ok)throw Error('config');return r.json()}).then(setConfig).catch(()=>{setConfig({language:'fr',shortcuts:[],searchEngine:'https://www.google.com/search?q={query}'})});
 })();
