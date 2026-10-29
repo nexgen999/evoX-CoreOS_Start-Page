@@ -99,7 +99,7 @@ function safeUrl(v){try{const u=new URL(v);return ['http:','https:'].includes(u.
 function normaliseInput(raw){
   const v=raw.trim(); if(!v)return null;
   if(/^[a-z][a-z0-9+.-]*:/i.test(v))return v;
-  if(!/\s/.test(v)&&(/^(localhost|127(?:\.\d{1,3}){3})(:\d+)?(\/.*)?$/i.test(v)||/^(?:[\w-]+\.)+[a-z]{2,}(?::\d+)?(?:\/.*)?$/i.test(v)))return 'https://'+v;
+  if(!/\s/.test(v)&&(/^(localhost|127(?:\.\d{1,3}){3})(:\d+)?(\/.*)?$|^(?:[\w-]+\.)+[a-z]{2,}(?::\d+)?(\/.*)?$/i.test(v)))return 'https://'+v;
   return (config.searchEngine||'https://www.google.com/search?q={query}').replace('{query}',encodeURIComponent(v));
 }
 function applyLanguage(lang){
@@ -143,14 +143,14 @@ function renderBadges(){
     if(!b.url||!safeUrl(b.url))return;
     const a=document.createElement('a');a.href=b.url;a.rel='noopener';
     
-    // Correction pour afficher proprement le libellé et le sous-libellé (chiffres stars/downloads)
-    const badgeTextParts = [b.label, b.subLabel].filter(Boolean);
-    a.textContent = badgeTextParts.join(' : ');
+    // Restauration exacte du format d'origine récupéré depuis config.json
+    a.textContent = [b.label, b.subLabel].filter(Boolean).join(' ');
     
     a.style.cssText='display:inline-block;padding:7px 10px;border-radius:8px;text-decoration:none;font-size:11px;font-weight:700;border:1px solid '+(b.accentColor||'#334155')+';background:'+(b.bgColor||'#111827')+';color:'+(b.textColor||'#e5e7eb');
     holder.appendChild(a);
   });
 }
+
 function setConfig(c){
   config=c||{};
   if(config.title)document.title=config.title;
