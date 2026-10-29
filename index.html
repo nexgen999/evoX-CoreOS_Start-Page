@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message de Soutien - evoX</title>
+    <style>
+        :root {
+            --bg-color: #060b13;
+            --card-bg: rgba(13, 22, 38, 0.85);
+            --card-border: rgba(0, 180, 216, 0.25);
+            --console-bg: #03070d;
+            --accent-cyan: #00b4d8;
+            --accent-blue: #0077b6;
+            --btn-blue: #00a8e8;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 50% 20%, #0d1b2a 0%, var(--bg-color) 70%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 24px;
+        }
+
+        /* En-tête : photo GitHub à gauche et sélecteur de langue à droite */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-cyan);
+            box-shadow: 0 0 12px rgba(0, 180, 216, 0.4);
+            object-fit: cover;
+        }
+
+        .user-info h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .user-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Bouton de langue FR/EN */
+        .lang-btn {
+            background-color: rgba(13, 22, 38, 0.9);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .lang-btn:hover {
+            border-color: var(--accent-cyan);
+            background-color: rgba(0, 180, 216, 0.1);
+        }
+
+        /* Container central */
+        main {
+            max-width: 950px;
+            width: 100%;
+            margin: 20px auto;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Fenêtre principale agrandie */
+        .announcement-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+        }
+
+        .announcement-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            color: var(--text-main);
+        }
+
+        .icon-warning {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+        }
+
+        .dot-red {
+            width: 9px;
+            height: 9px;
+            background-color: #ef4444;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ef4444;
+            display: inline-block;
+            margin-right: 4px;
+        }
+
+        /* Corps du texte lisible et aéré */
+        .announcement-body {
+            background-color: var(--console-bg);
+            border-radius: 8px;
+            padding: 24px;
+            min-height: 340px;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-main);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .announcement-body p {
+            margin-bottom: 16px;
+        }
+
+        .announcement-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .inline-heart {
+            width: 18px;
+            height: 18px;
+            vertical-align: -3px;
+            margin: 0 3px;
+        }
+
+        /* Gestion de l'affichage des langues */
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+
+        /* Pied de page et bouton Continuer en bas à droite */
+        footer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .btn-redirect {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--btn-blue));
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 15px rgba(0, 168, 232, 0.3);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn-redirect:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 168, 232, 0.5);
+            filter: brightness(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- En-tête : Avatar GitHub à gauche & Bouton Langue à droite -->
+    <header>
+        <div class="header-left">
+            <img src="https://github.com/nexgen999.png" alt="nexgen999" class="avatar">
+            <div class="user-info">
+                <h1>nexgen999</h1>
+                <p>evoX Ecosystem</p>
+            </div>
+        </div>
+        <button id="langToggle" class="lang-btn" onclick="toggleLanguage()">English / FR</button>
+    </header>
+
+    <!-- Contenu Principal : Annonce Importante -->
+    <main>
+        <div class="announcement-card">
+            <div class="announcement-header">
+                <span class="dot-red"></span>
+                <img src="https://img.icons8.com/emoji/96/warning-emoji.png" alt="Warning" class="icon-warning">
+                ANNONCE IMPORTANTE
+                <img src="https://img.icons8.com/emoji/96/warning-emoji.png" alt="Warning" class="icon-warning">
+            </div>
+
+            <!-- CONTENU FRANÇAIS -->
+            <div id="content-fr" class="announcement-body lang-content active">
+                <p>Suite à la fermeture du serveur Discord de la "Team PHU" et de nombreux dépôts GitHub, j'adresse un message de soutien à tous les développeurs. Certains utilisateurs malveillants s'amusent à faire fermer des serveurs Discord ou des <em>repositories</em>. Ceci est inadmissible !</p>
+                <p>ICI, nous soutenons <strong>TOUS</strong> les développeurs ! Les développeurs ne sont pas vos chiens et passent de nombreuses heures à coder pour vous produire des applications, des homebrews ou des exploits. Et voici le remerciement de ces gens ingrats ! Certains sont incapables d'attendre les nouvelles sorties et, par égoïsme, préfèrent tout faire fermer. Cette pratique est honteuse.</p>
+                <p>J'espère que ma communauté se montrera bienveillante et soutiendra aussi les développeurs. Nous codons par passion et vous partageons tout gratuitement, alors respectez les développeurs s'il vous plaît. Car grâce à ces <strong>IDIOTS</strong>, sachez que c'est toute la communauté qui perdra les futurs développements, car ils ne seront plus partagés !</p>
+                <p>Alors je le redis ici : je soutiens tous les développeurs et la Team PHU <img src="https://img.icons8.com/color/96/hearts.png" alt="Heart" class="inline-heart">. Merci à tous pour votre compréhension.</p>
+            </div>
+
+            <!-- CONTENU ANGLAIS -->
+            <div id="content-en" class="announcement-body lang-content">
+                <p>Following the closure of the "Team PHU" Discord server and numerous GitHub repositories, I want to send a message of support to all developers. Some malicious users take pleasure in getting Discord servers and repositories shut down. This is completely unacceptable!</p>
+                <p>HERE, we support <strong>ALL</strong> developers! Developers are not your servants and spend countless hours coding to bring you applications, homebrews, or exploits. And this is how ungrateful people thank them! Some are simply unable to wait for new releases and selfishly prefer to get everything taken down. This practice is disgraceful.</p>
+                <p>I hope my community will show kindness and support the devs as well. We code out of passion and share everything for free, so please respect the developers. Because thanks to these <strong>IDIOTS</strong>, keep in mind that the entire community will lose future developments since they will no longer be shared!</p>
+                <p>So I'll say it again here: I support all developers and Team PHU <img src="https://img.icons8.com/color/96/hearts.png" alt="Heart" class="inline-heart">. Thank you all for your support.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer : Bouton Continuer en bas à droite -->
+    <footer>
+        <a href="index2.html" class="btn-redirect" id="btnText">
+            Continuer &rarr;
+        </a>
+    </footer>
+
+    <!-- Script de bascule de langue -->
+    <script>
+        let currentLang = 'fr';
+        function toggleLanguage() {
+            const frContent = document.getElementById('content-fr');
+            const enContent = document.getElementById('content-en');
+            const btnText = document.getElementById('btnText');
+            const langToggle = document.getElementById('langToggle');
+
+            if (currentLang === 'fr') {
+                frContent.classList.remove('active');
+                enContent.classList.add('active');
+                btnText.innerHTML = 'Continue &rarr;';
+                langToggle.innerText = 'Français / EN';
+                currentLang = 'en';
+            } else {
+                enContent.classList.remove('active');
+                frContent.classList.add('active');
+                btnText.innerHTML = 'Continuer &rarr;';
+                langToggle.innerText = 'English / FR';
+                currentLang = 'fr';
+            }
+        }
+    </script>
+</body>
+</html>
